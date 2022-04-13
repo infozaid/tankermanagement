@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="tes1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="768f1469-ec0e-405e-888f-7cc0b4a93565">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="120"/>
+	<property name="ireport.y" value="133"/>
+	<parameter name="fromDate" class="java.lang.String"/>
+	<parameter name="toDate" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+(SELECT COUNT(id) FROM orders where date_created BETWEEN DATE_FORMAT($P{fromDate}, '%Y-%m-%d')
+AND DATE_FORMAT($P{toDate}, '%Y-%m-%d')) AS Request_Received,
+(SELECT COUNT(id) FROM orders WHERE finished=FALSE AND pendingrequest=FALSE and date_created BETWEEN DATE_FORMAT($P{fromDate}, '%Y-%m-%d')
+AND DATE_FORMAT($P{toDate}, '%Y-%m-%d')) AS Request_In_Action,
+(SELECT COUNT(*) FROM orders WHERE finished=TRUE and date_created BETWEEN DATE_FORMAT($P{fromDate}, '%Y-%m-%d')
+AND DATE_FORMAT($P{toDate}, '%Y-%m-%d')) AS Tankers_Delivered,
+(SELECT COUNT(*) FROM orders WHERE pendingrequest=TRUE AND finished=FALSE and date_created BETWEEN DATE_FORMAT($P{fromDate}, '%Y-%m-%d')
+AND DATE_FORMAT($P{toDate}, '%Y-%m-%d')) AS Tankers_Pending,
+(SELECT SUM(gallons) FROM orders WHERE finished=TRUE and date_created BETWEEN DATE_FORMAT($P{fromDate}, '%Y-%m-%d')
+AND DATE_FORMAT($P{toDate}, '%Y-%m-%d')) AS Total_Delivered_Gallons,
+(SELECT SUM(gallons) FROM orders WHERE pendingrequest=TRUE AND finished=FALSE and date_created BETWEEN DATE_FORMAT($P{fromDate}, '%Y-%m-%d')
+AND DATE_FORMAT($P{toDate}, '%Y-%m-%d')) AS Total_Pending_Gallons
+FROM orders
+ WHERE date_created BETWEEN DATE_FORMAT($P{fromDate}, '%Y-%m-%d')
+AND DATE_FORMAT($P{toDate}, '%Y-%m-%d') ORDER BY date_created ASC]]>
+	</queryString>
+	<field name="Request_Received" class="java.lang.Long"/>
+	<field name="Request_In_Action" class="java.lang.Long"/>
+	<field name="Tankers_Delivered" class="java.lang.Long"/>
+	<field name="Tankers_Pending" class="java.lang.Long"/>
+	<field name="Total_Delivered_Gallons" class="java.math.BigDecimal"/>
+	<field name="Total_Pending_Gallons" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="115">
+			<staticText>
+				<reportElement x="44" y="63" width="423" height="31" uuid="0b3e5ef7-7380-430c-8991-1b3e5c4b1caa"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[      ORDER SUMMARY REPORT]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="449" y="0" width="100" height="20" uuid="14a30218-87df-414e-882b-f321222fa6c1"/>
+				<textFieldExpression><![CDATA[$P{fromDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="449" y="20" width="100" height="20" uuid="e5e2b583-d76e-4730-b6e7-1de1881a0c72"/>
+				<textFieldExpression><![CDATA[$P{toDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="361" y="0" width="76" height="20" uuid="f0955818-e7de-4b3c-bd4a-051ae4e699ea"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[From Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="20" width="76" height="20" uuid="d7b3a4cc-cb89-449b-9ba0-5b41fabc9f84"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[To Date]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="62">
+			<staticText>
+				<reportElement x="189" y="42" width="82" height="20" uuid="54687661-1730-480a-bca7-2414f726f6f1"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tankers Delivered]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="42" width="79" height="20" uuid="1e33728a-46a7-47e8-8f9b-230aeeef32cf"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Request In Action]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="42" width="101" height="20" uuid="cb5610b4-d301-40a5-b94d-0af03402b6bc"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Request Received]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="271" y="42" width="90" height="20" uuid="51c9527b-c28e-4da8-bd96-b870ec790921"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tankers Pending]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="42" width="88" height="20" uuid="89757a9d-4c12-41f0-b9f4-311a6df5ecb0"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Delivered Gallons]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="449" y="42" width="94" height="20" uuid="e1f03bed-18e7-4e2f-8d6d-1b155f42e0ec"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" markup="none">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Pending Gallons]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="9" y="0" width="101" height="20" uuid="56758cbd-4f4a-40fd-9542-d10b56399a9a"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="9"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Request_Received}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="0" width="79" height="20" uuid="04d6b487-fa4e-4cbb-89aa-7fdb26e3237f"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Request_In_Action}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="0" width="82" height="20" uuid="dd4335dc-db46-4e0b-b323-9359be58bcf2"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tankers_Delivered}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="271" y="0" width="90" height="20" uuid="2953aee2-5e4b-498a-b55e-126325326dc1"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tankers_Pending}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="361" y="0" width="88" height="20" uuid="e3646408-7e4a-4e7f-bed6-4b334c6ba3fe"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Total_Delivered_Gallons}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="449" y="0" width="94" height="20" uuid="1e0de2b3-fa74-40d2-8473-8b882c64ee61"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Total_Pending_Gallons}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

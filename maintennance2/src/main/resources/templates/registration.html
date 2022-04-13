@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>TMS | Registration</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/registration.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/test.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Website CSS style -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Website Font style -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+<!-- Google Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Passion+One'
+	rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Oxygen'
+	rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<div class="container">
+		<div class="row main">
+			<div class="main-login main-center">
+
+				<form id="myform" autocomplete="off" action="#" th:action="@{/registration}"
+					th:object="${user}" method="post" class="form-horizontal"
+					role="form">
+					<fieldset>
+						<!-- Form Name -->
+						<legend>Create your account</legend>
+						<!-- Text input-->
+
+						<div class="form-group">
+							<label for="name" class="cols-sm-2 control-label"></label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-user fa"
+										aria-hidden="true"></i></span> <input type="text"
+										th:field="*{unitno}" placeholder="Unit No"
+										class="form-control" required />
+								</div>
+								<label th:if="${#fields.hasErrors('unitno')}"
+									th:errors="*{unitno}" class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="cols-sm-2 control-label"></label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-user fa"
+										aria-hidden="true"></i></span> <input type="text"
+										th:field="*{livingresidence}" placeholder="No of living people"
+										class="form-control" required />
+								</div>
+								 <label th:if="${#fields.hasErrors('livingresidence')}"
+									th:errors="*{livingresidence}" class="validation-message"></label>
+							</div>
+						</div>
+						
+						
+
+						<div class="form-group">
+							<label for="name" class="cols-sm-2 control-label"></label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-user fa"
+										aria-hidden="true"></i></span> <input type="text"
+										th:field="*{phoneno}" placeholder="Phone NO"
+										class="form-control" required />
+								</div>
+								<label th:if="${#fields.hasErrors('phoneno')}"
+									th:errors="*{phoneno}" class="validation-message"></label>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="name" class="cols-sm-2 control-label"></label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-user fa"
+										aria-hidden="true"></i></span> <input type="text"
+										data-inputmask="'mask': '99999-9999999-9'" th:field="*{cnic}"
+										placeholder="CNIC" class="form-control" required />
+								</div>
+								<label th:if="${#fields.hasErrors('cnic')}" th:errors="*{cnic}"
+									class="validation-message"></label>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="name" class="cols-sm-2 control-label"></label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-user fa"
+										aria-hidden="true"></i></span> <input type="text" th:field="*{name}"
+										placeholder="Name" class="form-control" />
+								</div>
+								<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+									class="validation-message"></label>
+							</div>
+						</div>
+						
+						<div class="row" >
+							<div class="col-sm-6">
+								<label for="name" class="cols-sm-2 control-label">Male</label> <input
+									type="checkbox" name="gender" th:field="*{gender}" class="check1" value="male" />
+									<label th:if="${#fields.hasErrors('gender')}"
+									th:errors="*{gender}" class="validation-message"></label>
+							</div>
+							<div class="col-sm-6">
+								<label for="name" class="cols-sm-2 control-label">Female</label>
+								<input type="checkbox" name="gender" th:field="*{gender}" class="check1" value="female" />
+								<label th:if="${#fields.hasErrors('gender')}"
+									th:errors="*{gender}" class="validation-message"></label>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label for="email" class="cols-sm-2 control-label"> </label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i
+										class="fa fa-envelope fa" aria-hidden="true"></i></span> <input
+										type="text" th:field="*{email}" placeholder="Email"
+										class="form-control" />
+								</div>
+								<label th:if="${#fields.hasErrors('email')}"
+									th:errors="*{email}" class="validation-message"></label>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="password" class="cols-sm-2 control-label"></label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i
+										class="fa fa-lock fa-lg" aria-hidden="true"></i></span> <input
+										type="password" th:field="*{password}" placeholder="Password"
+										class="form-control" />
+								</div>
+								<label th:if="${#fields.hasErrors('password')}"
+									th:errors="*{password}" class="validation-message"></label>
+							</div>
+						</div>
+						
+						
+						<div class="row">
+							<div class="col-sm-6">
+								<label for="name" class="cols-sm-2 control-label">Tenant</label> <input
+									type="checkbox" name="residence" th:field="*{residence}" class="check" value="tenant" />
+									<label th:if="${#fields.hasErrors('residence')}"
+									th:errors="*{residence}" class="validation-message"></label>
+							</div>
+							<div class="col-sm-6">
+								<label for="name" class="cols-sm-2 control-label">Owner</label>
+								<input type="checkbox" name="residence" th:field="*{residence}" class="check" value="owner" />
+								<label th:if="${#fields.hasErrors('residence')}"
+									th:errors="*{residence}" class="validation-message"></label>
+							</div>
+						</div>
+                        
+
+						<span style="color: green; font-weight: bold"
+							th:utext="${successMessage}"></span>
+
+						<div class="form-group">
+							<input type="submit" class="btn btn-lg btn-primary btn-block"
+								name="Submit" value="Register">
+						</div>
+					</fieldset>
+				</form>
+				<div class="panel-footer ">
+					Already have an account? <a th:href="@{/login}" onClick="">
+						Login </a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- jQuery 2.2.3 -->
+	<script src="/js/jquery-2.2.3.min.js"></script>
+	<!-- Bootstrap 3.3.6 -->
+	<script src="/js/bootstrap.min.js"></script>
+	<!-- DataTables -->
+
+	<!-- SlimScroll -->
+	<script src="/js/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="/js/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="/js/app.min.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="/js/demo.js"></script>
+	<!-- page script -->
+	<script src="/js/bootstrap-select.min.js"></script>
+	<script src="/js/jquery.dataTables.min.js"></script>
+	<script src="/js/dataTables.bootstrap.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<script>
+	$(document).ready(function() {
+		$('.check1').click(function() {
+			$('.check1').not(this).prop('checked', false);
+			required:true;
+		});
+	});
+	
+	
+
+		$(document).ready(function() {
+			$('.check').click(function() {
+				$('.check').not(this).prop('checked', false);
+				
+			});
+		});
+		
+		
+	</script>
+
+</body>
+</html>

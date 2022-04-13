@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TMS | REPORTS</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/css/dataTables.bootstrap.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="/css/_all-skins.min.css">
+<!--DATE PICKER  -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <header class="main-header">
+        <!-- Logo -->
+        <a th:href="@{/home}" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>M</b>RT</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg" th:utext="${auth.role.role}"> </span>
+
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="/images/avatar5.png" class="user-image" alt="User Image">
+                            <span class="hidden-xs" th:utext="${auth.name}"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="/images/avatar5.png" class="img-circle" alt="User Image">
+
+                                <p>
+                                    <span class="hidden-xs" th:utext="${auth.name}"></span>
+                                    <small><span class="hidden-xs" th:utext="${auth.email}"></span></small>
+                                </p>
+                            </li>
+                            <!-- Menu Body --
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a th:href="@{/myprofile/inf}" class="btn btn-primary btn-flat">Profile</a>
+                                </div>
+                               <!--  <div class="col-xs-offset-1 col-xs-4 text-center">
+                                    <a  th:href="@{/myprofile/change_password(id=${auth.id})}"><i class="fa fa-gears"></i> Change
+                                        Password</a>
+                                </div> -->
+                                <div class="pull-right">
+                                    <a th:href="@{/logout}" class="btn btn-danger btn-flat">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="/images/avatar5.png" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p><span class="hidden-xs" th:utext="${auth.name}"></span></p>
+                </div>
+            </div>
+            <!-- search form -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">MAIN NAVIGATION</li>
+                <li class="treeview">
+                    <a th:href="@{/home}">
+                        <i class="fa fa-home text-yellow"></i> <span>Home Page</span>
+                        <span class="pull-right-container">
+            </span>
+                    </a>
+                </li>
+                <li th:if="${control != 'ADMIN' AND control != 'TANKERADMIN'}" class="treeview">
+                    <a th:href="@{/myprofile/mytasks(id=${auth.id})}">
+                        <i class="fa fa-file-text text-green"></i> <span>My Tasks</span>
+                        <span class="pull-right-container">
+            </span>
+                    </a>
+                </li>
+                <li th:if="${control != 'ADMIN' AND control != 'TANKERADMIN'}" class="treeview">
+                    <a th:href="@{/myprofile/inf}">
+                        <i class="fa fa-gears text-blue"></i> <span>Profile Settings</span>
+                        <span class="pull-right-container">
+            </span>
+                    </a>
+                </li>
+                
+                <li th:if="${control != 'ADMIN' AND control != 'TANKERADMIN'}" class="treeview">
+					<a href="#">
+						<i class="fa fa-shopping-cart "></i>
+						<span>Water-Tanker Management</span>
+						<span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right "></i>
+            </span>
+					</a>
+					<ul class="treeview-menu">
+						<li><a th:href="@{/order}"><i class="fa fa-laptop"></i> Order Tanker</a>
+						</li>
+						<li><a th:href="@{/orders/myorders(id=${auth.id})}"><i class="fa fa-files-o"></i>View Order</a></li>
+					</ul>
+				</li>
+                
+                <li th:if="${control == 'ADMIN'}" class="treeview">
+                    <a th:href="@{/admin/users/all}">
+                        <i class="fa fa-users text-green"></i>
+                        <span>All Users</span>
+                    </a>
+                </li>
+                
+                 <li th:if="${control == 'ADMIN'}" class="treeview">
+                    <a th:href="@{/admin/rep}">
+                        <i class="fa fa-users text-green"></i>
+                        <span>Report</span>
+                    </a>
+                </li>
+                
+                <li th:if="${control == 'TANKERADMIN'}" class="treeview">
+                    <a th:href="@{/tankeradmin/rep}">
+                        <i class="fa fa-users text-green"></i>
+                        <span>Report</span>
+                    </a>
+                </li>
+                
+                <li th:if="${control == 'ADMIN'}" class="treeview">
+					<a href="#">
+						<i class="fa fa-laptop text-red "></i>
+						<span>View Tankers Request</span>
+						<span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+					</a>
+					<ul class="treeview-menu">
+						<li><a th:href="@{/admin/ViewOrders/view}"><i class="fa fa-eye text-orange"></i> View Order Request</a>
+						</li>
+						<li><a th:href="@{/admin/ViewOrders/viewapproveorder}"><i class="fa fa-eye text-red"></i> Approve Request</a></li>
+						<li><a th:href="@{/admin/ViewOrders/viewpendingorder}"><i class="fa fa-eye text-blue"></i> Pending Request</a></li>
+<!-- 						<li><a th:href="@{/admin/ViewOrders/page}"><i class="fa fa-eye text-blue"></i> Pagination</a></li>
+ -->						<!-- <li><a th:href="@{/admin/ViewOrders/viewhalforder}"><i class="fa fa-eye text-white"></i> View Half Order</a></li> -->
+					</ul>
+				</li>
+				<li th:if="${control == 'TANKERADMIN'}" class="treeview">
+					<a href="#">
+						<i class="fa fa-laptop text-red "></i>
+						<span>View Tankers Request</span>
+						<span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+					</a>
+					<ul class="treeview-menu">
+						<li><a th:href="@{/tankeradmin/ViewOrders/view}"><i class="fa fa-eye text-orange"></i> View Order Request</a>
+						</li>
+						<li><a th:href="@{/tankeradmin/ViewOrders/viewapproveorder}"><i class="fa fa-eye text-red"></i> Approve Request</a></li>
+						<li><a th:href="@{/tankeradmin/ViewOrders/viewpendingorder}"><i class="fa fa-eye text-blue"></i> Pending Request</a></li>
+<!-- 						<li><a th:href="@{/tankeradmin/ViewOrders/page}"><i class="fa fa-eye text-blue"></i> Pagination</a></li>
+ -->						<!-- <li><a th:href="@{/admin/ViewOrders/viewhalforder}"><i class="fa fa-eye text-white"></i> View Half Order</a></li> -->
+					</ul>
+				</li>
+                <li th:if="${control == 'ADMIN'}" class="treeview">
+                    <a href="#">
+                        <i class="fa fa-odnoklassniki text-blue"></i>
+                        <span>User Types</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/admin/roles/new}" ><i
+                                class="fa fa-plus"></i> New User Type</a></li>
+                        <li><a th:href="@{/admin/roles/all}" ><i class="fa fa-odnoklassniki"></i>
+                            All User Types</a></li>
+                    </ul>
+                </li>
+                <li th:if="${control == 'ADMIN'}" class="treeview">
+                    <a href="#">
+                        <i class="fa fa-files-o text-purple"></i>
+                        <span>Tasks</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/admin/tasks/new}"><i class="fa fa-plus"></i> New Task</a></li>
+                        <li><a th:href="@{/admin/tasks/all}"><i class="fa fa-file-text"></i> All Tasks</a></li>
+                    </ul>
+                </li>
+                <li th:if="${control == 'ADMIN'}" class="treeview">
+                    <a href="#">
+                        <i class="fa fa-laptop text-red "></i>
+                        <span>User-Task Management</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right "></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a th:href="@{/admin/user-task/new}"><i class="fa fa-laptop"></i> Task Assignment</a>
+                        </li>
+                        <li><a th:href="@{/admin/user-task/all}"><i class="fa fa-files-o"></i> User Tasks</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header"></section>
+
+			<!-- Main content -->
+			<section class="content">
+
+				<div class="container">
+					<div class="row">
+						<form autocomplete="off" th:action="@{/tankeradmin/export}"
+							th:object="${orders}" method="post" class="form-horizontal"
+							role="form">
+							<fieldset>
+								<!-- Form Name -->
+								<legend>RECEIVE ORDER REPORT</legend>
+								<!--  <div th:if="${message !=null}" th:text="${message}" th:class="${'alert ' + alertClass}"><h2 th:text="${message}"></h2> </div> -->
+
+								<!-- 									<span style="color: green; font-weight: bold" th:utext="${message}"></span> <span style="color: green; font-weight: bold" th:utext="${message1}"></span> <span style="color: red; font-weight: bold" th:utext="${errormessage}"></span>
+ -->
+								<!--  <div class="form-group">
+                                    <label class="col-md-4 control-label">Order Name</label>
+                                    <div class="col-md-4 text-left">
+                                        <select class="selectpicker" 
+                                                title="WATER TANKER" th:field="*{order_name}" tabindex="-98" disabled>
+                                            <option value="WATER TANKER" text="WATER TANKER" >WATER TANKER</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+
+
+								<div class="form-group">
+									<label class="col-md-4 control-label">From Date</label>
+									<div class="col-md-3 text-left">
+										<div class="input-group date">
+											<input type="text" class="form-control" id="datepicker"
+												th:field="*{fromDate}">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-th"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-md-4 control-label">To Date</label>
+									<div class="col-md-3 text-left">
+										<div class="input-group date">
+											<input type="text" class="form-control" id="datepicker1"
+												th:field="*{toDate}">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-th"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+
+								<!-- <span style="color: green; font-weight: bold"
+							th:utext="${successMessage}"></span> -->
+								<!-- Button (Double) -->
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="submitButton"></label>
+									<div class="col-md-8">
+										<button type="submit" id="submitButton" name="submitButton"
+											class="btn btn-success">Download Report</button>
+										<button type="button" class="btn btn-inverse"
+											onclick="window.history.back()">Cancel</button>
+									</div>
+
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<!-- FOR APPROVE REPORT  -->
+				<div class="container">
+					<div class="row">
+						<form autocomplete="off" th:action="@{/tankeradmin/approveexport}"
+							th:object="${orders}" method="post" class="form-horizontal"
+							role="form">
+							<fieldset>
+								<!-- Form Name -->
+								<legend>APPROVE ORDER REPORT</legend>
+								<!--  <div th:if="${message !=null}" th:text="${message}" th:class="${'alert ' + alertClass}"><h2 th:text="${message}"></h2> </div> -->
+
+								<!-- 									<span style="color: green; font-weight: bold" th:utext="${message}"></span> <span style="color: green; font-weight: bold" th:utext="${message1}"></span> <span style="color: red; font-weight: bold" th:utext="${errormessage}"></span>
+ -->
+								<!--  <div class="form-group">
+                                    <label class="col-md-4 control-label">Order Name</label>
+                                    <div class="col-md-4 text-left">
+                                        <select class="selectpicker" 
+                                                title="WATER TANKER" th:field="*{order_name}" tabindex="-98" disabled>
+                                            <option value="WATER TANKER" text="WATER TANKER" >WATER TANKER</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+
+
+								<div class="form-group">
+									<label class="col-md-4 control-label">From Date</label>
+									<div class="col-md-3 text-left">
+										<div class="input-group date">
+											<input type="text" class="form-control"
+												id="approvedatepicker" th:field="*{fromDate}">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-th"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-md-4 control-label">To Date</label>
+									<div class="col-md-3 text-left">
+										<div class="input-group date">
+											<input type="text" class="form-control"
+												id="approvedatepicker1" th:field="*{toDate}">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-th"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+
+								<!-- <span style="color: green; font-weight: bold"
+							th:utext="${successMessage}"></span> -->
+								<!-- Button (Double) -->
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="submitButton"></label>
+									<div class="col-md-8">
+										<button type="submit" id="submitButton" name="submitButton"
+											class="btn btn-success">Download Report</button>
+										<button type="button" class="btn btn-inverse"
+											onclick="window.history.back()">Cancel</button>
+									</div>
+
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				
+				<!-- Pending Order Report  -->
+				
+				<div class="container">
+					<div class="row">
+						<form autocomplete="off" th:action="@{/tankeradmin/pendingexport}"
+							th:object="${orders}" method="post" class="form-horizontal"
+							role="form">
+							<fieldset>
+								<!-- Form Name -->
+								<legend>PENDING ORDER REPORT</legend>
+								<!--  <div th:if="${message !=null}" th:text="${message}" th:class="${'alert ' + alertClass}"><h2 th:text="${message}"></h2> </div> -->
+
+								<!-- 									<span style="color: green; font-weight: bold" th:utext="${message}"></span> <span style="color: green; font-weight: bold" th:utext="${message1}"></span> <span style="color: red; font-weight: bold" th:utext="${errormessage}"></span>
+ -->
+								<!--  <div class="form-group">
+                                    <label class="col-md-4 control-label">Order Name</label>
+                                    <div class="col-md-4 text-left">
+                                        <select class="selectpicker" 
+                                                title="WATER TANKER" th:field="*{order_name}" tabindex="-98" disabled>
+                                            <option value="WATER TANKER" text="WATER TANKER" >WATER TANKER</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+
+
+								<div class="form-group">
+									<label class="col-md-4 control-label">From Date</label>
+									<div class="col-md-3 text-left">
+										<div class="input-group date">
+											<input type="text" class="form-control"
+												id="pendingdatepicker" th:field="*{fromDate}">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-th"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-md-4 control-label">To Date</label>
+									<div class="col-md-3 text-left">
+										<div class="input-group date">
+											<input type="text" class="form-control"
+												id="pendingdatepicker1" th:field="*{toDate}">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-th"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+
+								<!-- <span style="color: green; font-weight: bold"
+							th:utext="${successMessage}"></span> -->
+								<!-- Button (Double) -->
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="submitButton"></label>
+									<div class="col-md-8">
+										<button type="submit" id="submitButton" name="submitButton"
+											class="btn btn-success">Download Report</button>
+										<button type="button" class="btn btn-inverse"
+											onclick="window.history.back()">Cancel</button>
+									</div>
+
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<!-- Order Summary Report  -->
+				
+				<div class="container">
+					<div class="row">
+						<form autocomplete="off" th:action="@{/tankeradmin/ordersummaryexport}"
+							th:object="${orders}" method="post" class="form-horizontal"
+							role="form">
+							<fieldset>
+								<!-- Form Name -->
+								<legend>SUMMARY REPORT</legend>
+								<!--  <div th:if="${message !=null}" th:text="${message}" th:class="${'alert ' + alertClass}"><h2 th:text="${message}"></h2> </div> -->
+
+								<!-- 									<span style="color: green; font-weight: bold" th:utext="${message}"></span> <span style="color: green; font-weight: bold" th:utext="${message1}"></span> <span style="color: red; font-weight: bold" th:utext="${errormessage}"></span>
+ -->
+								<!--  <div class="form-group">
+                                    <label class="col-md-4 control-label">Order Name</label>
+                                    <div class="col-md-4 text-left">
+                                        <select class="selectpicker" 
+                                                title="WATER TANKER" th:field="*{order_name}" tabindex="-98" disabled>
+                                            <option value="WATER TANKER" text="WATER TANKER" >WATER TANKER</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+                                
+
+
+								<div class="form-group">
+									<label class="col-md-4 control-label">From Date</label>
+									<div class="col-md-3 text-left">
+										<div class="input-group date">
+											<input type="text" class="form-control"
+												id="summarydatepicker" th:field="*{fromDate}">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-th"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-md-4 control-label">To Date</label>
+									<div class="col-md-3 text-left">
+										<div class="input-group date">
+											<input type="text" class="form-control"
+												id="summarydatepicker1" th:field="*{toDate}">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-th"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+
+								<!-- <span style="color: green; font-weight: bold"
+							th:utext="${successMessage}"></span> -->
+								<!-- Button (Double) -->
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="submitButton"></label>
+									<div class="col-md-8">
+										<button type="submit" id="submitButton" name="submitButton"
+											class="btn btn-success">Download Report</button>
+										<button type="button" class="btn btn-inverse"
+											onclick="window.history.back()">Cancel</button>
+									</div>
+
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				
+				<!-- User History Report  -->
+				<div class="container">
+					<div class="row">
+						<form autocomplete="off" th:action="@{/tankeradmin/userhistoryexport}"
+							th:object="${orders}" method="post" class="form-horizontal"
+							role="form">
+							<fieldset>
+								<!-- Form Name -->
+								<legend>UNIT HISTORY REPORT</legend>
+								<!--  <div th:if="${message !=null}" th:text="${message}" th:class="${'alert ' + alertClass}"><h2 th:text="${message}"></h2> </div> -->
+
+								<!-- 									<span style="color: green; font-weight: bold" th:utext="${message}"></span> <span style="color: green; font-weight: bold" th:utext="${message1}"></span> <span style="color: red; font-weight: bold" th:utext="${errormessage}"></span>
+ -->
+								<!--  <div class="form-group">
+                                    <label class="col-md-4 control-label">Order Name</label>
+                                    <div class="col-md-4 text-left">
+                                        <select class="selectpicker" 
+                                                title="WATER TANKER" th:field="*{order_name}" tabindex="-98" disabled>
+                                            <option value="WATER TANKER" text="WATER TANKER" >WATER TANKER</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+                                
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Unit No</label>
+                                    <div class="col-md-3 text-left">
+										<input type="text" th:field="*{unitno}"
+											placeholder="unitno" class="form-control" required />
+									</div>
+                                </div>
+
+
+								<div class="form-group">
+									<label class="col-md-4 control-label">From Date</label>
+									<div class="col-md-3 text-left">
+										<div class="input-group date">
+											<input type="text" class="form-control"
+												id="userhistorydatepicker" th:field="*{fromDate}">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-th"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-md-4 control-label">To Date</label>
+									<div class="col-md-3 text-left">
+										<div class="input-group date">
+											<input type="text" class="form-control"
+												id="userhistorydatepicker1" th:field="*{toDate}">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-th"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+
+								<!-- <span style="color: green; font-weight: bold"
+							th:utext="${successMessage}"></span> -->
+								<!-- Button (Double) -->
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="submitButton"></label>
+									<div class="col-md-8">
+										<button type="submit" id="submitButton" name="submitButton"
+											class="btn btn-success">Download Report</button>
+										<button type="button" class="btn btn-inverse"
+											onclick="window.history.back()">Cancel</button>
+									</div>
+
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				
+				</div>
+				
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="/js/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="/js/bootstrap.min.js"></script>
+<!-- DataTables -->
+
+<!-- SlimScroll -->
+<script src="/js/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="/js/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/js/demo.js"></script>
+<!-- page script -->
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/dataTables.bootstrap.min.js"></script>
+<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/locales/bootstrap-datepicker.en-GB.min.js"
+			charset="UTF-8"></script>
+<script>
+			$(document).ready(function() {
+				$('#datepicker').datepicker({
+					format : "yyyy-mm-dd"
+				});
+			});
+
+			$(document).ready(function() {
+				$('#datepicker1').datepicker({
+					format : "yyyy-mm-dd"
+				});
+			});
+
+			$(document).ready(function() {
+				$('#approvedatepicker').datepicker({
+					format : "yyyy-mm-dd"
+				});
+			});
+
+			$(document).ready(function() {
+				$('#approvedatepicker1').datepicker({
+					format : "yyyy-mm-dd"
+				});
+			});
+			
+			$(document).ready(function() {
+				$('#pendingdatepicker').datepicker({
+					format : "yyyy-mm-dd"
+				});
+			});
+			
+			$(document).ready(function() {
+				$('#pendingdatepicker1').datepicker({
+					format : "yyyy-mm-dd"
+				});
+			});
+			
+			$(document).ready(function() {
+				$('#summarydatepicker').datepicker({
+					format : "yyyy-mm-dd"
+				});
+			});
+			
+			$(document).ready(function() {
+				$('#summarydatepicker1').datepicker({
+					format : "yyyy-mm-dd"
+				});
+			});
+			
+			$(document).ready(function() {
+				$('#userhistorydatepicker').datepicker({
+					format : "yyyy-mm-dd"
+				});
+			});
+			$(document).ready(function() {
+				$('#userhistorydatepicker1').datepicker({
+					format : "yyyy-mm-dd"
+				});
+			});
+		</script>
+</body>
+</html>
